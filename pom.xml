@@ -6,7 +6,7 @@
 
     <groupId>com.epam.mtat</groupId>
     <artifactId>mobileTaTrainingV2</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,9 +40,6 @@
                     <suiteXmlFiles>
                         <suiteXmlFile>${suite.file}</suiteXmlFile>
                     </suiteXmlFiles>
-                    <systemPropertyVariables>
-                        <ts.appium>http://localhost:4723/wd/hub</ts.appium>
-                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
@@ -58,21 +55,57 @@
 
     <profiles>
         <profile>
-            <id>native</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <suite.file>src/test/resources/nativeTNG.xml</suite.file>
-            </properties>
-        </profile>
-        <profile>
-            <id>web</id>
+            <id>localWeb</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <suite.file>./src/test/resources/webTNG.xml</suite.file>
+                <suite.file>src/test/resources/localAndroidWeb.xml</suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>localNative</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>src/test/resources/localAndroidNative.xml</suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>cloudAndroidNative</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>src/test/resources/cloudAndroidNative.xml</suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>cloudAndroidWeb</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>src/test/resources/cloudAndroidWeb.xml</suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>cloudIosNative</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>src/test/resources/cloudIosNative.xml</suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>cloudIosWeb</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>src/test/resources/cloudIosWeb.xml</suite.file>
             </properties>
         </profile>
     </profiles>

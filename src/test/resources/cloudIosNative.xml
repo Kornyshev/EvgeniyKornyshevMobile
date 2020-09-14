@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Native mobile testing Suite">
+    <parameter name="appType" value="native"/>
+    <parameter name="platformName" value="iOS"/>
+    <parameter name="bundleId" value=""/>
+    <test name="Cloud iOS Native tests">
+        <groups>
+            <run>
+                <include name="native"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="scenarios"/>
+        </packages>
+    </test>
+</suite>

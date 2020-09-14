@@ -1,5 +1,6 @@
 package setup;
 
+import data.CloudCredentials;
 import io.appium.java_client.AppiumDriver;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -18,11 +19,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BaseTest implements IDriver {
 
+    public static final int IMPLICITLY_WAIT_TIMEOUT = 10;
     private static AppiumDriver appiumDriver;
-    private String deviceName = "";
+    private String deviceUdid = "";
     private String appType = "";
 
     /*
@@ -54,13 +57,18 @@ public class BaseTest implements IDriver {
         activitiesForTest = Arrays.asList(activities.clone());
     }
 
-    @Parameters({"platformName","appType","deviceName","browserName","app"})
+    @Parameters({"appType","platformName","browserName","bundleId","appPackage","appActivity","app"})
     @BeforeSuite(alwaysRun = true)
     public void setUp(
-            String platformName, String appType, String deviceName,
-            @Optional("") String browserName, @Optional("") String app) {
-        setAppiumDriver(platformName, deviceName, browserName, app);
-        this.deviceName = deviceName;
+            String appType,
+            String platformName,
+            @Optional("") String browserName,
+            @Optional("") String bundleId,
+            @Optional("") String appPackage,
+            @Optional("") String appActivity,
+            @Optional("") String app)
+            throws Exception {
+        setAppiumDriver(platformName, browserName, bundleId, appPackage, appActivity, app);
         this.appType = appType;
     }
 
@@ -82,22 +90,50 @@ public class BaseTest implements IDriver {
     }
 
     private boolean isNativeAppAndNotEmulator() {
-        return this.appType.equals("native") && !this.deviceName.contains("emulator");
+        return this.appType.equals("native") && this.deviceUdid.contains("J9AXB761S242FKH");
     }
 
     private void setAppiumDriver(
-            String platformName, String deviceName, String browserName, String app){
+            String platformName,
+            String browserName,
+            String bundleId,
+            String appPackage,
+            String appActivity,
+            String app) throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
+        //Platform name capability
         capabilities.setCapability("platformName", platformName);
-        capabilities.setCapability("deviceName", deviceName);
-        if(app.endsWith(".apk")) {
-            capabilities.setCapability(
-                    "app", (new File(app)).getAbsolutePath());
+
+        //UDID capability from property file
+        if (platformName.equals("Android")) {
+            this.deviceUdid = CloudCredentials.getAndroidDeviceID();
+        } else if (platformName.equals("iOS")) {
+            this.deviceUdid = CloudCredentials.getIOsDeviceID();
+        } else {
+            throw new Exception("Platform name is incorrect!!!");
         }
+        capabilities.setCapability("udid", deviceUdid);
+
+        //Capability about browser
         capabilities.setCapability("browserName", browserName);
         capabilities.setCapability("chromedriverDisableBuildCheck","true");
+
+        //Capabilities for Android app on Cloud device
+        capabilities.setCapability("appPackage", appPackage);
+        capabilities.setCapability("appActivity", appActivity);
+
+        //Capability for iOS app identification
+        capabilities.setCapability("bundleId", bundleId);
+
+        //Capability for local app with particular path
+        if (app.endsWith(".apk")) {
+            capabilities.setCapability("app", new File(app).getAbsolutePath());
+        }
+
+        //Creating driver instance with implicitly wait setting
         try {
-            appiumDriver = new AppiumDriver(new URL(System.getProperty("ts.appium")), capabilities);
+            appiumDriver = new AppiumDriver(new URL(CloudCredentials.getUrlWithToken()), capabilities);
+            appiumDriver.manage().timeouts().implicitlyWait(IMPLICITLY_WAIT_TIMEOUT, TimeUnit.SECONDS);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
