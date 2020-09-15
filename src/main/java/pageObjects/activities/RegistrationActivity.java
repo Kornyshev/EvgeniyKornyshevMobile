@@ -11,23 +11,23 @@ import pageObjects.ElementSupplier;
 public class RegistrationActivity implements ElementSupplier {
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_email")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@value='user@example.com']")
     WebElement emailField;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_username")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@value='TimApple']")
     WebElement usernameField;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_password")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeSecureTextField[@value='Required']")
     WebElement passField;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_confirm_password")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeSecureTextField[@value='Repeat please']")
     WebElement passConfirmField;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_new_account_button")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@label='Register new account']")
     WebElement newAccountBtn;
 
     public RegistrationActivity(AppiumDriver driver) {

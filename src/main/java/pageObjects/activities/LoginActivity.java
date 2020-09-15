@@ -11,19 +11,19 @@ import pageObjects.ElementSupplier;
 public class LoginActivity implements ElementSupplier {
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@label='Sign In']")
     WebElement signInBtn;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_button")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@label='Register new account']")
     WebElement registerBtn;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_email")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeTextField[@value='user@example.com']")
     WebElement emailField;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_pwd")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeSecureTextField[@value='Required']")
     WebElement passwordField;
 
     public LoginActivity(AppiumDriver driver) {

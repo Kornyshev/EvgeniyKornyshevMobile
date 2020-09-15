@@ -2,8 +2,8 @@
 <suite name="Native mobile testing Suite">
     <parameter name="appType" value="native"/>
     <parameter name="platformName" value="Android"/>
-    <parameter name="appPackage" value=""/>
-    <parameter name="appActivity" value=""/>
+    <parameter name="appPackage" value="platkovsky.alexey.epamtestapp"/>
+    <parameter name="appActivity" value="activities.LoginActivity"/>
     <test name="Cloud Android Native tests">
         <groups>
             <run>

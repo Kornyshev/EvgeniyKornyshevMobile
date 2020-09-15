@@ -25,8 +25,9 @@ public class BaseTest implements IDriver {
 
     public static final int IMPLICITLY_WAIT_TIMEOUT = 10;
     private static AppiumDriver appiumDriver;
-    private String deviceUdid = "";
-    private String appType = "";
+    protected String deviceUdid = "";
+    protected String appType = "";
+    protected String platformName = "";
 
     /*
     That collection used for definition those activities which we want to use
@@ -70,6 +71,7 @@ public class BaseTest implements IDriver {
             throws Exception {
         setAppiumDriver(platformName, browserName, bundleId, appPackage, appActivity, app);
         this.appType = appType;
+        this.platformName = platformName;
     }
 
     @AfterSuite(alwaysRun = true)
@@ -84,13 +86,13 @@ public class BaseTest implements IDriver {
      */
     @BeforeMethod(alwaysRun = true)
     public void beforeMethod() {
-        if (isNativeAppAndNotEmulator()) {
+        if (itIsMyOwnPhyssicalDevice()) {
             getDriver().navigate().back();
         }
     }
 
-    private boolean isNativeAppAndNotEmulator() {
-        return this.appType.equals("native") && this.deviceUdid.contains("J9AXB761S242FKH");
+    private boolean itIsMyOwnPhyssicalDevice() {
+        return this.deviceUdid.contains("J9AXB761S242FKH");
     }
 
     private void setAppiumDriver(

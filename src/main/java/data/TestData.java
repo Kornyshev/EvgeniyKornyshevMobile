@@ -14,7 +14,7 @@ public class TestData {
     @DataProvider(name = "DataForRegistrationScenario")
     public Object[][] getDataForRegistration() {
         return new Object[][]{
-                {"LoginActivity", "RegistrationActivity", "BudgetActivity", "ADD EXPENSE"}
+                {"LoginActivity", "RegistrationActivity", "BudgetActivity", "ADD EXPENSE", "ADD"}
         };
     }
 

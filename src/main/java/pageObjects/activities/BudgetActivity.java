@@ -11,7 +11,7 @@ import pageObjects.ElementSupplier;
 public class BudgetActivity implements ElementSupplier {
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/add_new_expense")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeButton[@label='Add']")
     WebElement addExpenseBtn;
 
     public BudgetActivity(AppiumDriver driver) {

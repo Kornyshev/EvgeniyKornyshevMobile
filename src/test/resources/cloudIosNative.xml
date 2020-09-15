@@ -2,7 +2,7 @@
 <suite name="Native mobile testing Suite">
     <parameter name="appType" value="native"/>
     <parameter name="platformName" value="iOS"/>
-    <parameter name="bundleId" value=""/>
+    <parameter name="bundleId" value="com.epam.EPAMTestApp.ii"/>
     <test name="Cloud iOS Native tests">
         <groups>
             <run>
