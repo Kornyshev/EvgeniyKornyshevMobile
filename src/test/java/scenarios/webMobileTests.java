@@ -2,12 +2,14 @@ package scenarios;
 
 import data.TestData;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import pageObjects.pages.GoogleHomePage;
 import setup.BaseTest;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import java.util.List;
+
+import static org.testng.Assert.*;
 
 public class webMobileTests extends BaseTest {
 
@@ -30,11 +32,12 @@ public class webMobileTests extends BaseTest {
     public void googleSearchTest(String url, String searchQuery) {
         getDriver().get(url);
         waitForPageLoad();
-        int actualSearchResultCount = new GoogleHomePage(getDriver())
+        List<WebElement> resultsSearchBlock =
+                new GoogleHomePage(getDriver())
                 .typeSearchQuery(searchQuery)
                 .sendSearchQuery()
-                .getMoreResultSearchBlock()
-                .size();
-        assertTrue(actualSearchResultCount > 0);
+                .getResultsSearchBlock();
+        System.out.println(resultsSearchBlock.size());
+        assertTrue(resultsSearchBlock.size() > 2);
     }
 }
