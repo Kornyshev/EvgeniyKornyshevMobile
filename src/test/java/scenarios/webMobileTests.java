@@ -34,10 +34,15 @@ public class webMobileTests extends BaseTest {
         waitForPageLoad();
         List<WebElement> resultsSearchBlock =
                 new GoogleHomePage(getDriver())
-                .typeSearchQuery(searchQuery)
-                .sendSearchQuery()
-                .getResultsSearchBlock();
-        System.out.println(resultsSearchBlock.size());
+                        .typeSearchQuery(searchQuery)
+                        .sendSearchQuery()
+                        .getResultsSearchBlock();
         assertTrue(resultsSearchBlock.size() > 2);
+        /*
+        Here I am using comparison with 2 because first two items in that list
+        are some technical tags on the page which are appear always in DOM.
+        So, I should get list with more than two elements to make sure that
+        I have some search results on the page.
+         */
     }
 }

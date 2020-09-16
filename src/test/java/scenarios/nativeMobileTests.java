@@ -2,6 +2,7 @@ package scenarios;
 
 import data.TestData;
 import net.sourceforge.tess4j.TesseractException;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import pageObjects.ElementSupplier;
 import pageObjects.activities.BudgetActivity;
@@ -28,16 +29,16 @@ public class nativeMobileTests extends BaseTest {
         if (platformName.equals("Android")) {
             currentActivity = getPO(loginActivity);
             currentActivity.getElement("signInBtn").click();
+            /*
+            That assertion check that we have expected text on our screenshot
+            That code does not work on cloud devices, I don't know why but it recognizes
+            whatever instead of one particular phrase about Incorrect email or password.
+            */
+            String actualScreenText = screenText(captureScreenshot());
+            System.out.println(actualScreenText);
+            //assertTrue(actualScreenText.contains(expectedMessage));
+            //Text recognition doesn't work on cloud device
         }
-
-        /*
-        That assertion check that we have expected text on our screenshot
-        That code does not work on cloud devices, I don't know why but it recognizes
-        whatever instead of one particular phrase about Incorrect email or password.
-
-        String actualScreenText = screenText(captureScreenshot());
-        assertTrue(actualScreenText.contains(expectedMessage));
-        */
     }
 
     /*
@@ -66,6 +67,7 @@ public class nativeMobileTests extends BaseTest {
         currentActivity.getElement("registerBtn").click();
 
         currentActivity = getPO(regActivity);
+        currentActivity.getElement("emailField").click();
         currentActivity.getElement("emailField").sendKeys(TEST_USER.email);
         currentActivity.getElement("usernameField").sendKeys(TEST_USER.username);
         currentActivity.getElement("passField").sendKeys(TEST_USER.password);
@@ -78,13 +80,14 @@ public class nativeMobileTests extends BaseTest {
         currentActivity.getElement("signInBtn").click();
 
         currentActivity = getPO(budgetActivity);
+        WebElement addExpenseBtn = currentActivity.getElement("addExpenseBtn");
         if (platformName.equals("Android")) {
             assertEquals(
-                    currentActivity.getElement("addExpenseBtn").getText().toLowerCase(),
+                    addExpenseBtn.getText().toLowerCase(),
                     expectedAndroidString.toLowerCase());
         } else {
             assertEquals(
-                    currentActivity.getElement("addExpenseBtn").getText().toLowerCase(),
+                    addExpenseBtn.getText().toLowerCase(),
                     expectedIosString.toLowerCase());
         }
     }

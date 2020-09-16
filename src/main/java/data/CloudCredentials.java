@@ -11,11 +11,17 @@ public class CloudCredentials {
                 .replaceAll("token", bundle.getString("token"));
     }
 
-    public static String getAndroidDeviceID() {
-        return bundle.getString("android.udid");
+    public static String getDeviceUdid(String platformName) {
+        if (platformName.equals("Android")) {
+            return bundle.getString("android.udid");
+        } else if (platformName.equals("iOS")) {
+            return bundle.getString("ios.udid");
+        } else {
+            throw new RuntimeException("Platform name is incorrect!!!");
+        }
     }
 
-    public static String getIOsDeviceID() {
-        return bundle.getString("ios.udid");
+    public static String getToken() {
+        return bundle.getString("token");
     }
 }

@@ -1,6 +1,6 @@
 package setup;
 
-import data.CloudCredentials;
+import apiInteraction.AppInstallation;
 import io.appium.java_client.AppiumDriver;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -21,11 +21,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static data.CloudCredentials.*;
+
 public class BaseTest implements IDriver {
 
     public static final int IMPLICITLY_WAIT_TIMEOUT = 10;
     private static AppiumDriver appiumDriver;
-    protected String deviceUdid = "";
     protected String appType = "";
     protected String platformName = "";
 
@@ -69,6 +70,9 @@ public class BaseTest implements IDriver {
             @Optional("") String appActivity,
             @Optional("") String app)
             throws Exception {
+        if (appType.equals("native")) {
+            AppInstallation.install(platformName, getDeviceUdid(platformName));
+        }
         setAppiumDriver(platformName, browserName, bundleId, appPackage, appActivity, app);
         this.appType = appType;
         this.platformName = platformName;
@@ -79,42 +83,19 @@ public class BaseTest implements IDriver {
         appiumDriver.closeApp();
     }
 
-    /*
-    That method solves my problem with interaction with real device which is trying to
-    auto-fill Email test field with my data. I need to focus on main activity XML
-    instead of that auto suggestion message.
-     */
-    @BeforeMethod(alwaysRun = true)
-    public void beforeMethod() {
-        if (itIsMyOwnPhyssicalDevice()) {
-            getDriver().navigate().back();
-        }
-    }
-
-    private boolean itIsMyOwnPhyssicalDevice() {
-        return this.deviceUdid.contains("J9AXB761S242FKH");
-    }
-
     private void setAppiumDriver(
             String platformName,
             String browserName,
             String bundleId,
             String appPackage,
             String appActivity,
-            String app) throws Exception {
+            String app) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         //Platform name capability
         capabilities.setCapability("platformName", platformName);
 
         //UDID capability from property file
-        if (platformName.equals("Android")) {
-            this.deviceUdid = CloudCredentials.getAndroidDeviceID();
-        } else if (platformName.equals("iOS")) {
-            this.deviceUdid = CloudCredentials.getIOsDeviceID();
-        } else {
-            throw new Exception("Platform name is incorrect!!!");
-        }
-        capabilities.setCapability("udid", deviceUdid);
+        capabilities.setCapability("udid", getDeviceUdid(platformName));
 
         //Capability about browser
         capabilities.setCapability("browserName", browserName);
@@ -134,7 +115,7 @@ public class BaseTest implements IDriver {
 
         //Creating driver instance with implicitly wait setting
         try {
-            appiumDriver = new AppiumDriver(new URL(CloudCredentials.getUrlWithToken()), capabilities);
+            appiumDriver = new AppiumDriver(new URL(getUrlWithToken()), capabilities);
             appiumDriver.manage().timeouts().implicitlyWait(IMPLICITLY_WAIT_TIMEOUT, TimeUnit.SECONDS);
         } catch (MalformedURLException e) {
             e.printStackTrace();

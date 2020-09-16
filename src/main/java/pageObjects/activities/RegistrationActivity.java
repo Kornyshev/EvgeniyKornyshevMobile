@@ -27,7 +27,7 @@ public class RegistrationActivity implements ElementSupplier {
     WebElement passConfirmField;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_new_account_button")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@label='Register new account']")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@value='Register new account']")
     WebElement newAccountBtn;
 
     public RegistrationActivity(AppiumDriver driver) {

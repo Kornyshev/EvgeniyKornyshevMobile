@@ -11,11 +11,11 @@ import pageObjects.ElementSupplier;
 public class LoginActivity implements ElementSupplier {
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@label='Sign In']")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@value='Sign In']")
     WebElement signInBtn;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_button")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@label='Register new account']")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@value='Register new account']")
     WebElement registerBtn;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_email")
