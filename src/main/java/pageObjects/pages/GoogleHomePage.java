@@ -13,7 +13,7 @@ public class GoogleHomePage {
 
     private final AppiumDriver driver;
 
-    @FindBy(css = "[name='q']")
+    @FindBy(css = "input[name='q']")
     WebElement searchField;
 
     public GoogleHomePage(AppiumDriver appiumDriver) {
@@ -30,7 +30,7 @@ public class GoogleHomePage {
     }
 
     public GoogleResultPage sendSearchQuery() {
-        searchField.sendKeys(Keys.ENTER);
+        searchField.submit();
         return new GoogleResultPage(driver);
     }
 }
