@@ -67,7 +67,6 @@ public class nativeMobileTests extends BaseTest {
         currentActivity.getElement("registerBtn").click();
 
         currentActivity = getPO(regActivity);
-        currentActivity.getElement("emailField").click();
         currentActivity.getElement("emailField").sendKeys(TEST_USER.email);
         currentActivity.getElement("usernameField").sendKeys(TEST_USER.username);
         currentActivity.getElement("passField").sendKeys(TEST_USER.password);
